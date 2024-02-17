@@ -35,6 +35,9 @@ class TaxPayer:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         prof_picture_path = os.path.normpath(os.path.join(base_dir, path))
 
+        if not prof_picture_path.startswith(base_dir):
+            return None
+
         with open(prof_picture_path, 'rb') as pic:
             picture = bytearray(pic.read())
 
@@ -50,6 +53,10 @@ class TaxPayer:
 
         base_dir = os.path.dirname(os.path.abspath(__file__))
         if ".." in path or (path.startswith('/') and not path.startswith(base_dir)):
+            return None
+
+        path = os.path.normpath(os.path.join(base_dir, path))
+        if not path.startswith(base_dir):
             return None
 
         with open(path, 'rb') as form:
